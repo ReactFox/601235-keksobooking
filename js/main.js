@@ -1,4 +1,5 @@
 'use strict';
+
 var map = document.querySelector('.map');
 map.classList.remove('map--faded');
 
@@ -9,7 +10,7 @@ var mapWidth = map.offsetWidth;
 // var mapHeight = map.offsetHeight;
 
 
-//    «y»: случайное число, координата y метки на карте от 130 до 630.
+//  «y»: случайное число, координата y метки на карте от 130 до 630.
 var indentPinY = 40;
 var minPositionMapY = 130 + indentPinY;
 var maxPositionMapY = 630;
@@ -17,13 +18,13 @@ var maxPositionMapY = 630;
 var indentPinX = 45;
 
 
-// Получает содержимое шаблона пин из разметки
+//  Получает содержимое шаблона пин из разметки
 var similarPinTamplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
-// Отрисуйте сгенерированные DOM-элементы в блок .map__pins. Для вставки элементов используйте
+//  Отрисуйте сгенерированные DOM-элементы в блок .map__pins. Для вставки элементов используйте
 var mapPins = document.querySelector('.map__pins');
 
-// Получает шаблон #card для создания DOM-элемента объявления
+//  Получает шаблон #card для создания DOM-элемента объявления
 var similarCardTamplate = document.querySelector('#card').content.querySelector('.map__card');
 var avatars = [1, 2, 3, 4, 5, 6, 7, 8];
 
@@ -83,6 +84,7 @@ var getArrayShuffle = function (photos) {
 };
 
 
+// функция для геннерации массива объектов с предложения аренды
 var offers = (function () {
   var result = [];
 
@@ -116,6 +118,7 @@ var offers = (function () {
 })();
 
 
+// Функция для создания наполняемого шаблонна меток
 var renderPin = function (offer) {
   var itemElement = similarPinTamplate.cloneNode(true);
 
@@ -126,12 +129,14 @@ var renderPin = function (offer) {
   return itemElement;
 };
 
+// функция для добавления в разметку фрагмета с шаблонами с метками
 var fragmentPin = document.createDocumentFragment();
 for (var i = 0; i < offers.length; i++) {
   fragmentPin.appendChild(renderPin(offers[i]));
 }
 
 mapPins.appendChild(fragmentPin);
+
 
 var getTranslateTypeOffer = function (typeOffer) {
   var res = '';
@@ -180,13 +185,13 @@ var renderCard = function (card) {
 };
 
 
+// получает блок фильтрации объявлений
 var mapFiltersContainer = document.querySelector('.map__filters-container');
-
-var parentElemetFilters = mapFiltersContainer.parentNode;
 
 
 var createCard = function (offer) {
-  parentElemetFilters.insertBefore(renderCard(offer), mapFiltersContainer);
+  map.insertBefore(renderCard(offer), mapFiltersContainer);
 };
 
+// выводит случайную карточку предложения на сайт
 createCard(offers[getRandomInRange(0, offers.length - 1)]);
